@@ -100,7 +100,6 @@ jobs:
 
     - name: Organizefiles
       id: organize
-      if: !cancelled()
       run: |
         mkdir firmware
         mv -f openwrt/bin/targets/*/*/{*combined*,*sysupgrade*} ./firmware/ 2>/dev/null || true
@@ -112,21 +111,20 @@ jobs:
         
     - name: Upload firmware directory
       uses: actions/upload-artifact@main
-      if: steps.organize.outputs.status == 'success' && !cancelled()
+      if: steps.organize.outputs.status == 'success'
       with:
         name: ${{ env.date3 }}_ax3000t
         path: ${{ env.FIRMWARE }}
         
     - name: Create release
       id: tag
-      if: !cancelled()
       run: |
         touch release.txt
         echo "status=success" >> $GITHUB_OUTPUT
         
     - name: Upload firmware to release
       uses: softprops/action-gh-release@v2
-      if: steps.tag.outputs.status == 'success' && !cancelled()
+      if: steps.tag.outputs.status == 'success'
       env:
         GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
       with:
@@ -144,7 +142,6 @@ jobs:
 
     - name: Remove old Releases
       uses: dev-drprasad/delete-older-releases@master
-      if: !cancelled()
       with:
         keep_latest: 6
         delete_tags: true
