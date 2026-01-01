@@ -73,12 +73,6 @@ jobs:
         echo "date2=$(date +'%m/%d %Y')" >> $GITHUB_ENV
         echo "date3=$(date +'%m.%d')" >> $GITHUB_ENV
 
-    - name: Download package
-      working-directory: ./openwrt
-      run: |
-        make download -j$(nproc)
-        find dl -size -1024c -exec rm -f {} \;
-
     - name: Cache
       uses: klever1988/cachewrtbuild@main
       with:
