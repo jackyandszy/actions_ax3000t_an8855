@@ -69,12 +69,6 @@ jobs:
         echo "date2=$(date +'%m/%d %Y')" >> $GITHUB_ENV
         echo "date3=$(date +'%m.%d')" >> $GITHUB_ENV
 
-    - name: Cache
-      uses: klever1988/cachewrtbuild@main
-      with:
-        ccache: 'false'
-        prefix: ${{ github.workspace }}/openwrt
-        
     - name: Download package
       run: |
         cd openwrt
@@ -83,6 +77,13 @@ jobs:
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
 
+   - name: Cache
+      uses: klever1988/cachewrtbuild@main
+      with:
+        ccache: 'false'
+        prefix: ${{ github.workspace }}/openwrt
+        mixkey: 'ax3000t'
+        
     - name: Compile the firmware
       run: |
         cd openwrt
