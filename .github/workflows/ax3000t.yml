@@ -68,30 +68,26 @@ jobs:
         echo "date=$(date +'%Y.%m.%d-%H%M')" >> $GITHUB_ENV
         echo "date2=$(date +'%m/%d %Y')" >> $GITHUB_ENV
         echo "date3=$(date +'%m.%d')" >> $GITHUB_ENV
-
+ 
     - name: Download package
+      working-directory: ./openwrt
       run: |
-        cd openwrt
-        make defconfig
-        make download -j8 V=11
-        find dl -size -1024c -exec ls -l {} \;
+        make download -j$(nproc)
         find dl -size -1024c -exec rm -f {} \;
 
-#    - name: Cache
-#      uses: klever1988/cachewrtbuild@main
-#      with:
-#        ccache: 'true'
-#        mixkey: 'test1'
-#        prefix: ${{ github.workspace }}/openwrt
-
+    - name: Cache
+      uses: klever1988/cachewrtbuild@main
+      with:
+        ccache: 'true'
+        mixkey: 'test1'
+        prefix: ${{ github.workspace }}/openwrt
+        
     - name: Compile the firmware
+      working-directory: ./openwrt
       run: |
-        cd openwrt
-        echo -e "$(nproc) thread compile"
-#       make -j$(nproc) || make -j1 || make -j1 V=s
-        make -j1 V=s
-        echo "status=success" >> $GITHUB_OUTPUT
-
+        echo -e "$(($(nproc)+1)) thread compile"
+        make -j$(($(nproc)+1)) || make -j1 V=s       
+     
  
     - name: Upload bin directory
       uses: actions/upload-artifact@main
