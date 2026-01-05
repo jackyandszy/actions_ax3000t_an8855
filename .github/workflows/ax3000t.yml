@@ -77,12 +77,12 @@ jobs:
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
 
-    - name: Cache
-      uses: klever1988/cachewrtbuild@main
-      with:
-        ccache: 'true'
-        mixkey: 'test1'
-        prefix: ${{ github.workspace }}/openwrt
+#    - name: Cache
+#      uses: klever1988/cachewrtbuild@main
+#      with:
+#        ccache: 'true'
+#        mixkey: 'test1'
+#        prefix: ${{ github.workspace }}/openwrt
 
     - name: Compile the firmware
       run: |
