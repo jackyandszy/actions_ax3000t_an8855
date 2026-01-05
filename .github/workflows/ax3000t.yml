@@ -81,8 +81,8 @@ jobs:
       uses: klever1988/cachewrtbuild@main
       with:
         ccache: 'true'
-        prefix: ${{ github.workspace }}/openwrt
         mixkey: 'test1'
+        prefix: ${{ github.workspace }}/openwrt
 
     - name: Compile the firmware
       run: |
