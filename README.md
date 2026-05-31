@@ -3,6 +3,8 @@
 
 A template for building immortalwrt for xiaomi-ax3000t_an8855 with GitHub Actions
 
+仅用于娱乐
+
 ## Credits
 
 - [Microsoft Azure](https://azure.microsoft.com)
