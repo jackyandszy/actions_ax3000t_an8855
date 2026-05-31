@@ -73,8 +73,7 @@ jobs:
 
     - name: 安装源
       run: cd openwrt && ./scripts/feeds install -a
-      chmod +x $SELF_BEFORE_SH
-      cd openwrt
+      chmod +x $GITHUB_WORKSPACE/$SELF_BEFORE_SH
       $GITHUB_WORKSPACE/$SELF_BEFORE_SH
 
     - name: 加载配置文件
