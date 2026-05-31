@@ -68,17 +68,14 @@ jobs:
         git clone $REPO_URL -b $REPO_BRANCH openwrt
         ln -sf /srcdir/openwrt $GITHUB_WORKSPACE/openwrt
 
-    - name: 加载源
-      run: |
-        chmod +x $SELF_BEFORE_SH
-        cd openwrt
-        $GITHUB_WORKSPACE/$SELF_BEFORE_SH
-
     - name: 更新源
       run: cd openwrt && ./scripts/feeds update -a
 
     - name: 安装源
       run: cd openwrt && ./scripts/feeds install -a
+      chmod +x $SELF_BEFORE_SH
+      cd openwrt
+      $GITHUB_WORKSPACE/$SELF_BEFORE_SH
 
     - name: 加载配置文件
       run: |
