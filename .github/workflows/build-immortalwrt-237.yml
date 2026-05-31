@@ -70,7 +70,6 @@ jobs:
 
     - name: 加载源
       run: |
-        [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
         chmod +x $SELF_BEFORE_SH
         cd openwrt
         $GITHUB_WORKSPACE/$SELF_BEFORE_SH
